@@ -1,11 +1,19 @@
 #include "DecodeCode.h"
 #include <stdio.h>
 #include <math.h>
+int power(int v, int exponent){
+  int temp=1;
+  for(int i=0;i<exponent;i++){
+    temp=temp*v;
+  }
+  return temp;
+}
 
 int unsignedBits(int v, int start, int finish){
   v=v>>start;
   int range=(finish-start)+1;
-  range=pow(2,range)-1;
+  range=power(2,range);
+  range=range-1;
   v=v&range;
   return v;
 }
@@ -13,10 +21,13 @@ int unsignedBits(int v, int start, int finish){
 int signedBits(int v, int start, int finish){
   v=v>>start;
   int x=v;
-  int signCheck=pow(2,finish-start);
+  int signCheck=power(2,finish-start);
   x=x&signCheck;
+
   int range=(finish-start)+1;
-  range=pow(2,range)-1;
+  range=power(2,range);
+  range=range-1;
+  
   if(x==0){
     v=v&range;
     return v;
